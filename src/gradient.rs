@@ -54,6 +54,21 @@ pub fn generate(
                     stops_src: (color_str.len()+4, stops_str.len()),
                 });
         }
+
+        // let acc = colors.iter().map(|color| {
+        //     LinSrgb::from_str(color)
+        //         .expect("hex code")
+        //         .into_format()
+        // }).collect::<Vec<LinSrgb>>();
+
+        // let gradient = Gradient::new(acc);
+        // gradient.take(5).map(|Rgb { red, green, blue, standard: _ }| {
+        //     owo_colors::Rgb((red * 255.0) as u8, (green * 255.0) as u8, (blue * 255.0) as u8)
+        // }).for_each(|color| {
+        //     let debug_str = "    ";
+        //     print!("{}", debug_str.on_color(color));
+        // });
+
         let color_list = zip(stops, colors)
             .map(|(&stop, color)| {
                 (
@@ -64,6 +79,7 @@ pub fn generate(
                 )
             })
             .collect::<Vec<(f32, LinSrgb)>>();
+
         let gradient = Gradient::with_domain(color_list);
 
         for color in gradient.take(*num_steps).map(
